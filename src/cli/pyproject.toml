@@ -1,0 +1,28 @@
+[project]
+name = "qtcloud-finance-cli"
+version = "0.1.0"
+description = "量潮财务云 CLI - Beancount 智能记账 TUI"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "textual",
+    "pydantic-settings",
+    "beancount",
+    "requests",
+]
+
+[project.scripts]
+qtcloud-finance = "qtcloud_finance_cli.tui:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/qtcloud_finance_cli"]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+]
