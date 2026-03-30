@@ -24,9 +24,7 @@
 2. 更新 `ROADMAP.md` 状态
 
 ### 运行测试
-```bash
-cd src/cli && uv run pytest tests/ -v
-```
+参考 `CONTRIBUTING.md` 的测试命令
 
 ---
 
