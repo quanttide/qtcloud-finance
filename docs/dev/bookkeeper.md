@@ -172,14 +172,3 @@
    - 生成收支报表
    - 可视化分析
 
-### 架构扩展
-
-1. **插件化存储后端**
-   - 定义 Storage Interface
-   - 实现 OSS/S3/Git 等后端
-
-2. **插件化账本格式**
-   - 定义 Ledger Format Interface
-   - 支持 Beancount/Plain/text 等
-
----
