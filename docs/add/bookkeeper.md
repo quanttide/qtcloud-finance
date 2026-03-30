@@ -1,35 +1,26 @@
 # 记账员
 
-## 概述
+## 做什么
 
-把自然语言描述转成 Beancount 记账格式。让大模型做打字员，让解析器做审核员。
+把自然语言转成 Beancount 记账格式。
 
-## 场景
+## 流程
 
-**场景一：员工报销**
+1. **读取账户**：从账本获取已开通的账户列表
+2. **生成**：LLM 根据账户信息生成 Beancount
+3. **验证**：解析器检查格式、借贷平衡、账户存在
+4. **写入**：通过验证后写入账本
 
-输入：员工说"今天中午出差午餐花了 80 块"
+## 例子
 
-输出：
+输入："午餐报销 80 块"
+
 ```
-2026-03-30 * "午餐报销"
-  Expenses:Travel:Meal   80.00 CNY
-  Assets:Digital:WeChatPay  -80.00 CNY
+1. 读取账户：Assets:Digital:WeChatPay, Expenses:Food:Meal
+2. 生成：
+   2026-03-30 * "午餐报销"
+     Expenses:Food:Meal   80.00 CNY
+     Assets:Digital:WeChatPay  -80.00 CNY
+3. 验证通过
+4. 写入账本
 ```
-
-**场景二：发工资**
-
-输入："3月工资 15000 转到建行卡"
-
-输出：
-```
-2026-03-30 * "3月工资"
-  Expenses:Salary:Wages   15000.00 CNY
-  Assets:Bank:ChinaConstructionBank  -15000.00 CNY
-```
-
-## 验证
-
-- 语法：Beancount 解析器检查格式
-- 借贷：正负金额必须相等
-- 账户：必须是账本里已开通的账户
