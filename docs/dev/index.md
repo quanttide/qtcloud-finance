@@ -38,7 +38,9 @@
 
 ---
 
-## 技术栈
+## 技术实现
+
+### 技术栈
 
 - **Python** - 开发语言
 - **Textual** - TUI 框架
@@ -46,17 +48,13 @@
 - **Beancount** - 账本解析与验证
 - **Ollama** - 本地 LLM
 
----
-
-## 存储
+### 存储
 
 - 本地文件
 - 阿里云 OSS
 - AWS S3
 
----
-
-## 配置
+### 配置
 
 环境变量：`ALIBABA_CLOUD_ACCESS_KEY_ID`、`OSS_ENDPOINT`、`OSS_BUCKET_NAME` 等
 
