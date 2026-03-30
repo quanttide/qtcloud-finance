@@ -1,6 +1,6 @@
 [project]
 name = "qtcloud-finance-cli"
-version = "0.1.0"
+version = "0.0.1-alpha.1"
 description = "量潮财务云 CLI - Beancount 智能记账 TUI"
 readme = "README.md"
 requires-python = ">=3.12"
