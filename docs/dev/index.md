@@ -1,10 +1,8 @@
-# qtcloud-finance 开发文档
+# 开发者文档首页
 
-## 概述
+## 领域建模
 
-qtcloud-finance 是一套财务 AI Agent 系统。
-
-### 参与对象
+### 领域实体
 
 | 对象 | 说明 |
 |------|------|
@@ -12,14 +10,14 @@ qtcloud-finance 是一套财务 AI Agent 系统。
 | Beancount 账本 | 复式记账格式文件 |
 | 调账记录 | 确认后的调账分录 |
 
-### 智能体
+### 领域服务
 
 | 智能体 | 职责 | 输入 | 输出 |
 |--------|------|------|------|
 | **记账员** | 记录交易 | 自然语言 | Beancount 记账 |
 | **对账员** | 核对差异 | 银行流水 + 账本 | 差异 / 调账建议 |
 
-### 流程
+### 上下文
 
 ```
 ┌─────────────┐    记账    ┌─────────────┐
@@ -40,16 +38,26 @@ qtcloud-finance 是一套财务 AI Agent 系统。
 
 ---
 
-## 文档索引
+## 技术栈
 
-- [bookkeeper.py](../src/cli/dev/bookkeeper.md) - 记账员实现
-- [reconciler.py](../src/cli/dev/reconciler.md) - 对账员实现
-- [tui.md](../src/cli/dev/tui.md) - TUI 实现
-- [config.md](../src/cli/dev/config.md) - 配置说明
+- **Python** - 开发语言
+- **Textual** - TUI 框架
+- **Pydantic Settings** - 配置管理
+- **Beancount** - 账本解析与验证
+- **Ollama** - 本地 LLM
 
 ---
 
-## 核心实现
+## 存储
 
-- 使用 **Beancount** 格式
-- 存储：本地文件 / OSS / S3
+- 本地文件
+- 阿里云 OSS
+- AWS S3
+
+---
+
+## 配置
+
+环境变量：`ALIBABA_CLOUD_ACCESS_KEY_ID`、`OSS_ENDPOINT`、`OSS_BUCKET_NAME` 等
+
+详见 [.env.example](../../.env.example)
