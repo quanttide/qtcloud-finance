@@ -1,0 +1,8 @@
+2026-01-01 open Assets:Digital:WeChatPay
+2026-01-01 open Assets:Bank:CMB
+2026-01-01 open Expenses:Food:Restaurant
+2026-01-01 open Equity:Opening-Balances
+
+2026-03-30 * "网卡购买"
+  Assets:Bank:CMB  -50.00 CNY
+  Expenses:Hardware:Networking  50.00 CNY
