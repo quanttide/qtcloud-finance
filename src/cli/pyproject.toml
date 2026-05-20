@@ -8,7 +8,7 @@ dependencies = [
     "textual",
     "pydantic-settings",
     "beancount",
-    "requests",
+    "quanttide-agent",
 ]
 
 [project.scripts]

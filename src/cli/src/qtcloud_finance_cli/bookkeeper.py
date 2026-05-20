@@ -4,9 +4,9 @@ import re
 from pathlib import Path
 from typing import Optional
 
-import requests
 from beancount import loader
 from beancount.parser import parser
+from quanttide_agent import LLM
 
 from .config import Settings
 
@@ -43,23 +43,8 @@ def build_prompt(accounts: list[str], user_input: str) -> tuple[str, str]:
 
 
 def call_llm(system: str, user: str, settings: Settings) -> str:
-    """调用 Ollama"""
-    resp = requests.post(
-        f"{settings.ollama_host}/api/generate",
-        json={
-            "model": settings.ollama_model,
-            "system": system,
-            "prompt": user,
-            "stream": False,
-            "options": {
-                "temperature": settings.temperature,
-                "num_predict": settings.max_tokens,
-            },
-        },
-        timeout=30,
-    )
-    resp.raise_for_status()
-    return resp.json().get("response", "")
+    llm = LLM(model=settings.llm_model, base_url=settings.llm_base_url, api_key=settings.llm_api_key)
+    return llm.chat([{"role": "system", "content": system}, {"role": "user", "content": user}]).content
 
 
 def extract_beancount(text: str) -> str:

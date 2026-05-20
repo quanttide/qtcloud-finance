@@ -7,11 +7,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Optional
 
-import requests
 from beancount import loader
 from beancount.core import data
 from pydantic import BaseModel
 from pydantic_settings import BaseSettings
+from quanttide_agent import LLM
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,8 +20,9 @@ logger = logging.getLogger(__name__)
 class Settings(BaseSettings):
     """统一配置"""
 
-    ollama_host: str = "http://localhost:11434"
-    ollama_model: str = "qwen2.5-coder:3b"
+    llm_model: str = "deepseek-v4-flash"
+    llm_base_url: str = "https://api.deepseek.com"
+    llm_api_key: str = ""
     data_root: Path = Path(__file__).parent.parent.parent / "data"
     match_date_window: int = 2  # 日期匹配窗口（天）
     match_amount_threshold: float = 1.0  # 金额匹配阈值
