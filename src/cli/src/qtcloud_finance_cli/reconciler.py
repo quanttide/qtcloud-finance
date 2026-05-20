@@ -277,24 +277,11 @@ def build_prompt(
 
 
 def call_llm(system: str, user: str, settings: Settings) -> str:
-    """调用 Ollama（JSON 模式）"""
-    resp = requests.post(
-        f"{settings.ollama_host}/api/generate",
-        json={
-            "model": settings.ollama_model,
-            "system": system,
-            "prompt": user,
-            "stream": False,
-            "format": "json",  # JSON 模式
-            "options": {
-                "temperature": settings.temperature,
-                "num_predict": settings.max_tokens,
-            },
-        },
-        timeout=30,
-    )
-    resp.raise_for_status()
-    return resp.json().get("response", "")
+    llm = LLM(model=settings.llm_model, base_url=settings.llm_base_url, api_key=settings.llm_api_key)
+    return llm.chat(
+        [{"role": "system", "content": system}, {"role": "user", "content": user}],
+        response_format={"type": "json_object"},
+    ).content
 
 
 def parse_llm_response(text: str) -> dict:
