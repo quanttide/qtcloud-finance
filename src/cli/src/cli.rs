@@ -45,6 +45,27 @@ pub enum CashflowCommand {
         #[arg(long, short, default_value = "table")]
         format: String,
     },
+    /// 假设场景推演
+    Simulate {
+        /// Beancount 文件路径
+        #[arg(default_value = "main.beancount")]
+        path: String,
+        /// 调整项: ACCOUNT@AMOUNT, 如 Income:Salary@-20%, Expenses:Rent@1000
+        #[arg(long, short = 'a', name = "ADJUST")]
+        adjust: Vec<String>,
+        /// 一次性事件: DATE@AMOUNT, 金额直接表示现金影响（正=流入，负=流出）
+        #[arg(long, short = 'o', name = "ONE_TIME")]
+        one_time: Vec<String>,
+        /// 起始日期 (YYYY-MM-DD)
+        #[arg(long, short)]
+        start: Option<String>,
+        /// 截止日期 (YYYY-MM-DD)
+        #[arg(long, short)]
+        end: Option<String>,
+        /// 输出格式: table, json
+        #[arg(long, short, default_value = "table")]
+        format: String,
+    },
     /// 现金流预测
     Forecast {
         /// Beancount 文件路径

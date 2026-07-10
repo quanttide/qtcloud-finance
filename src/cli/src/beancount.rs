@@ -2,7 +2,7 @@ use chrono::NaiveDate;
 use std::fs;
 
 #[allow(dead_code)]
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Transaction {
     pub date: NaiveDate,
     pub description: String,
@@ -10,7 +10,7 @@ pub struct Transaction {
 }
 
 #[allow(dead_code)]
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Posting {
     pub account: String,
     pub amount: f64,

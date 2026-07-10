@@ -474,6 +474,191 @@ pub fn compute_forecast(
     }
 }
 
+// ─── 推演 ──────────────────────────────────────────────────
+
+#[derive(Debug)]
+pub struct Adjustment {
+    pub account: String,
+    pub amount: f64,
+    pub is_percent: bool,
+}
+
+#[derive(Debug, Serialize)]
+pub struct SimulateReport {
+    pub period_label: String,
+    pub periods: Vec<String>,
+    pub baseline_nets: Vec<f64>,
+    pub adjusted_nets: Vec<f64>,
+    pub deltas: Vec<f64>,
+}
+
+/// 解析调整参数: "ACCOUNT@AMOUNT" 或 "ACCOUNT@PERCENT%"
+pub fn parse_adjustment(input: &str) -> Result<Adjustment, String> {
+    let parts: Vec<&str> = input.splitn(2, '@').collect();
+    if parts.len() < 2 {
+        return Err(format!(
+            "调整参数格式错误: '{}'，应为 ACCOUNT@AMOUNT 或 ACCOUNT@PERCENT%",
+            input
+        ));
+    }
+    let account = parts[0].to_string();
+    let amount_str = parts[1];
+
+    if let Some(pct_str) = amount_str.strip_suffix('%') {
+        let pct: f64 = pct_str
+            .parse()
+            .map_err(|_| format!("无效百分比: '{}'", amount_str))?;
+        Ok(Adjustment {
+            account,
+            amount: pct,
+            is_percent: true,
+        })
+    } else {
+        let amt: f64 = amount_str
+            .parse()
+            .map_err(|_| format!("无效金额: '{}'", amount_str))?;
+        Ok(Adjustment {
+            account,
+            amount: amt,
+            is_percent: false,
+        })
+    }
+}
+
+/// 在报表层计算推演：不碰交易记录，直接对报表做算术
+pub fn compute_simulate(
+    transactions: &[Transaction],
+    adjustments: &[Adjustment],
+    events: &[(NaiveDate, String, f64)],
+    period: Period,
+    start: NaiveDate,
+    end: NaiveDate,
+) -> SimulateReport {
+    let baseline = compute_cashflow(transactions, period, start, end);
+    let period_starts = generate_periods(period, start, end);
+    let mut impacts = vec![0.0_f64; period_starts.len()];
+
+    // 计算调整项的现金影响
+    for adj in adjustments {
+        for tx in transactions {
+            if tx.date < start || tx.date > end {
+                continue;
+            }
+
+            // 找到匹配的 posting
+            let mut matched_total = 0.0_f64;
+            let mut has_match = false;
+            for posting in &tx.postings {
+                if posting.account.starts_with(&adj.account) {
+                    matched_total += posting.amount;
+                    has_match = true;
+                }
+            }
+            if !has_match {
+                continue;
+            }
+
+            // 计算调整 delta
+            let delta = if adj.is_percent {
+                matched_total * adj.amount / 100.0
+            } else {
+                adj.amount
+            };
+
+            // 现金影响 = -delta（调增收入→现金减少，调减支出→现金增加）
+            let cash_impact = -delta;
+
+            // 分配到对应期间
+            if let Some(idx) = period_index(&period_starts, period, tx.date) {
+                if idx < impacts.len() {
+                    impacts[idx] += cash_impact;
+                }
+            }
+        }
+    }
+
+    // 计算一次性事件的现金影响
+    for (date, _account, amount) in events {
+        if *date < start || *date > end {
+            continue;
+        }
+        // amount 直接表示现金影响：正=流入，负=流出
+        if let Some(idx) = period_index(&period_starts, period, *date) {
+            if idx < impacts.len() {
+                impacts[idx] += *amount;
+            }
+        }
+    }
+
+    let periods: Vec<String> = (0..period_starts.len())
+        .map(|i| period_label(period, i as u32))
+        .collect();
+
+    let adjusted_nets: Vec<f64> = baseline
+        .net_totals
+        .iter()
+        .zip(&impacts)
+        .map(|(b, i)| b + i)
+        .collect();
+
+    SimulateReport {
+        period_label: format!("推演对比 {}~{}", start, end),
+        baseline_nets: baseline.net_totals.clone(),
+        deltas: impacts,
+        adjusted_nets,
+        periods,
+    }
+}
+
+fn period_index(period_starts: &[NaiveDate], p: Period, date: NaiveDate) -> Option<usize> {
+    for (i, &ps) in period_starts.iter().enumerate() {
+        let pe = period_end(p, ps);
+        if date >= ps && date <= pe {
+            return Some(i);
+        }
+    }
+    None
+}
+
+pub fn print_simulate_table(report: &SimulateReport, format: &str) {
+    match format {
+        "json" => {
+            println!("{}", serde_json::to_string_pretty(report).unwrap());
+        }
+        _ => {
+            println!("  --- {} ---", report.period_label);
+            #[derive(Tabled)]
+            struct Row {
+                #[tabled(rename = "期间")]
+                period: String,
+                #[tabled(rename = "基线")]
+                baseline: String,
+                #[tabled(rename = "推演")]
+                adjusted: String,
+                #[tabled(rename = "变化")]
+                delta: String,
+            }
+
+            let rows: Vec<Row> = report
+                .periods
+                .iter()
+                .enumerate()
+                .map(|(i, p)| Row {
+                    period: p.clone(),
+                    baseline: format!("{:+.0}", report.baseline_nets[i]),
+                    adjusted: format!("{:+.0}", report.adjusted_nets[i]),
+                    delta: format!("{:+.0}", report.deltas[i]),
+                })
+                .collect();
+
+            println!("{}", Table::new(rows));
+            let total_delta: f64 = report.deltas.iter().sum();
+            println!("  总变化: {:+.0}", total_delta);
+            println!();
+        }
+    }
+}
+
 // ─── 输出格式化 ────────────────────────────────────────────
 
 pub fn print_status_table(report: &CashflowReport, format: &str) {
