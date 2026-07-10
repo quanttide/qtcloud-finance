@@ -1,0 +1,224 @@
+; 量潮财务云 CLI 演示账本
+; 模拟一个小型自由职业者 2026 年上半年的收支
+;
+; Beancount 符号约定:
+;   Income: 负值 = 收入增加（贷记账户）
+;   Expense: 正值 = 支出增加（借记账户）
+;   Assets: 正值 = 资产增加（借记），负值 = 资产减少（贷记）
+;   Liabilities: 负值 = 负债增加（贷记），正值 = 负债减少（借记）
+
+2026-01-05 * "Freelance" "网站开发项目 - 尾款"
+  Income:Freelance:Web                   -35000.00 CNY
+  Assets:Cash:Checking                    35000.00 CNY
+
+2026-01-08 * "房租" "1月房租"
+  Expenses:Housing:Rent                   12000.00 CNY
+  Assets:Cash:Checking                   -12000.00 CNY
+
+2026-01-10 * "超市" "盒马鲜生"
+  Expenses:Food:Grocery                    1280.50 CNY
+  Assets:Cash:Checking                    -1280.50 CNY
+
+2026-01-12 * "餐饮" "海底捞"
+  Expenses:Food:Dining                      386.00 CNY
+  Assets:Cash:Checking                     -386.00 CNY
+
+2026-01-15 * "订阅" "Netflix"
+  Expenses:Subscription:Streaming            199.00 CNY
+  Assets:Cash:Checking                     -199.00 CNY
+
+2026-01-20 * "手机话费" "中国移动"
+  Expenses:Utilities:Phone                    99.00 CNY
+  Assets:Cash:Checking                      -99.00 CNY
+
+2026-01-22 * "信用卡还款" "招商银行信用卡"
+  Liabilities:CreditCard:BOC                3200.00 CNY
+  Assets:Cash:Checking                    -3200.00 CNY
+
+2026-02-03 * "Freelance" "小程序开发 - 首款"
+  Income:Freelance:Mobile                 -25000.00 CNY
+  Assets:Cash:Checking                    25000.00 CNY
+
+2026-02-05 * "房租" "2月房租"
+  Expenses:Housing:Rent                   12000.00 CNY
+  Assets:Cash:Checking                   -12000.00 CNY
+
+2026-02-08 * "超市" "永辉超市"
+  Expenses:Food:Grocery                    1560.30 CNY
+  Assets:Cash:Checking                    -1560.30 CNY
+
+2026-02-10 * "房贷" "招商银行贷款"
+  Expenses:Housing:Mortgage                 5800.00 CNY
+  Assets:Cash:Checking                    -5800.00 CNY
+
+2026-02-14 * "餐饮" "情人节晚餐"
+  Expenses:Food:Dining                      520.00 CNY
+  Assets:Cash:Checking                     -520.00 CNY
+
+2026-02-15 * "订阅" "Netflix"
+  Expenses:Subscription:Streaming            199.00 CNY
+  Assets:Cash:Checking                     -199.00 CNY
+
+2026-02-18 * "水电费" "国家电网"
+  Expenses:Utilities:Electricity             345.00 CNY
+  Assets:Cash:Checking                     -345.00 CNY
+
+2026-02-20 * "手机话费" "中国移动"
+  Expenses:Utilities:Phone                    99.00 CNY
+  Assets:Cash:Checking                      -99.00 CNY
+
+2026-02-22 * "信用卡还款" "招商银行信用卡"
+  Liabilities:CreditCard:BOC                2800.00 CNY
+  Assets:Cash:Checking                    -2800.00 CNY
+
+2026-03-02 * "Freelance" "网站维护合同"
+  Income:Freelance:Web                     -8000.00 CNY
+  Assets:Cash:Checking                      8000.00 CNY
+
+2026-03-05 * "房租" "3月房租"
+  Expenses:Housing:Rent                   12000.00 CNY
+  Assets:Cash:Checking                   -12000.00 CNY
+
+2026-03-08 * "超市" "山姆会员店"
+  Expenses:Food:Grocery                    2180.00 CNY
+  Assets:Cash:Checking                    -2180.00 CNY
+
+2026-03-10 * "房贷" "招商银行贷款"
+  Expenses:Housing:Mortgage                 5800.00 CNY
+  Assets:Cash:Checking                    -5800.00 CNY
+
+2026-03-12 * "分红" "基金分红"
+  Income:Investment:Dividend               -1500.00 CNY
+  Assets:Cash:Savings                      1500.00 CNY
+
+2026-03-15 * "订阅" "Netflix"
+  Expenses:Subscription:Streaming            199.00 CNY
+  Assets:Cash:Checking                     -199.00 CNY
+
+2026-03-18 * "餐饮" "朋友聚餐"
+  Expenses:Food:Dining                      320.00 CNY
+  Assets:Cash:Checking                     -320.00 CNY
+
+2026-03-20 * "手机话费" "中国移动"
+  Expenses:Utilities:Phone                    99.00 CNY
+  Assets:Cash:Checking                      -99.00 CNY
+
+2026-03-22 * "信用卡还款" "招商银行信用卡"
+  Liabilities:CreditCard:BOC                3100.00 CNY
+  Assets:Cash:Checking                    -3100.00 CNY
+
+2026-04-03 * "Freelance" "数据分析项目"
+  Income:Freelance:DataAnalytics          -42000.00 CNY
+  Assets:Cash:Checking                    42000.00 CNY
+
+2026-04-05 * "房租" "4月房租"
+  Expenses:Housing:Rent                   12000.00 CNY
+  Assets:Cash:Checking                   -12000.00 CNY
+
+2026-04-07 * "超市" "盒马鲜生"
+  Expenses:Food:Grocery                    1350.00 CNY
+  Assets:Cash:Checking                    -1350.00 CNY
+
+2026-04-10 * "房贷" "招商银行贷款"
+  Expenses:Housing:Mortgage                 5800.00 CNY
+  Assets:Cash:Checking                    -5800.00 CNY
+
+2026-04-12 * "理财" "理财产品到期"
+  Income:Investment:Product               -5000.00 CNY
+  Assets:Cash:Savings                      5000.00 CNY
+
+2026-04-15 * "订阅" "Netflix"
+  Expenses:Subscription:Streaming            199.00 CNY
+  Assets:Cash:Checking                     -199.00 CNY
+
+2026-04-18 * "餐饮" "西贝莜面村"
+  Expenses:Food:Dining                      280.00 CNY
+  Assets:Cash:Checking                     -280.00 CNY
+
+2026-04-20 * "手机话费" "中国移动"
+  Expenses:Utilities:Phone                    99.00 CNY
+  Assets:Cash:Checking                      -99.00 CNY
+
+2026-04-22 * "信用卡还款" "招商银行信用卡"
+  Liabilities:CreditCard:BOC                3500.00 CNY
+  Assets:Cash:Checking                    -3500.00 CNY
+
+2026-04-25 * "保险" "重疾险年缴"
+  Expenses:Insurance:Health                12000.00 CNY
+  Assets:Cash:Checking                   -12000.00 CNY
+
+2026-05-05 * "Freelance" "UI设计项目"
+  Income:Freelance:Design                 -28000.00 CNY
+  Assets:Cash:Checking                    28000.00 CNY
+
+2026-05-05 * "房租" "5月房租"
+  Expenses:Housing:Rent                   12000.00 CNY
+  Assets:Cash:Checking                   -12000.00 CNY
+
+2026-05-08 * "超市" "永辉超市"
+  Expenses:Food:Grocery                    1480.00 CNY
+  Assets:Cash:Checking                    -1480.00 CNY
+
+2026-05-10 * "房贷" "招商银行贷款"
+  Expenses:Housing:Mortgage                 5800.00 CNY
+  Assets:Cash:Checking                    -5800.00 CNY
+
+2026-05-15 * "订阅" "Netflix"
+  Expenses:Subscription:Streaming            199.00 CNY
+  Assets:Cash:Checking                     -199.00 CNY
+
+2026-05-18 * "餐饮" "日料"
+  Expenses:Food:Dining                      450.00 CNY
+  Assets:Cash:Checking                     -450.00 CNY
+
+2026-05-20 * "手机话费" "中国移动"
+  Expenses:Utilities:Phone                    99.00 CNY
+  Assets:Cash:Checking                      -99.00 CNY
+
+2026-05-22 * "信用卡还款" "招商银行信用卡"
+  Liabilities:CreditCard:BOC                2900.00 CNY
+  Assets:Cash:Checking                    -2900.00 CNY
+
+2026-05-28 * "旅行" "五一机票"
+  Expenses:Travel:Transport                 2300.00 CNY
+  Assets:Cash:Checking                    -2300.00 CNY
+
+2026-06-05 * "Freelance" "后端开发项目"
+  Income:Freelance:Backend                -38000.00 CNY
+  Assets:Cash:Checking                    38000.00 CNY
+
+2026-06-05 * "房租" "6月房租"
+  Expenses:Housing:Rent                   12000.00 CNY
+  Assets:Cash:Checking                   -12000.00 CNY
+
+2026-06-08 * "超市" "盒马鲜生"
+  Expenses:Food:Grocery                    1680.00 CNY
+  Assets:Cash:Checking                    -1680.00 CNY
+
+2026-06-10 * "房贷" "招商银行贷款"
+  Expenses:Housing:Mortgage                 5800.00 CNY
+  Assets:Cash:Checking                    -5800.00 CNY
+
+2026-06-12 * "项目奖金" "优秀项目奖"
+  Income:Freelance:Bonus                  -5000.00 CNY
+  Assets:Cash:Checking                    5000.00 CNY
+
+2026-06-15 * "订阅" "Netflix + Spotify"
+  Expenses:Subscription:Streaming            299.00 CNY
+  Assets:Cash:Checking                     -299.00 CNY
+
+2026-06-18 * "餐饮" "粤菜"
+  Expenses:Food:Dining                      350.00 CNY
+  Assets:Cash:Checking                     -350.00 CNY
+
+2026-06-20 * "手机话费" "中国移动"
+  Expenses:Utilities:Phone                    99.00 CNY
+  Assets:Cash:Checking                      -99.00 CNY
+
+2026-06-22 * "信用卡还款" "招商银行信用卡"
+  Liabilities:CreditCard:BOC                3200.00 CNY
+  Assets:Cash:Checking                    -3200.00 CNY
+
+2026-06-25 * "体检" "年度体检"
+  Expenses:Medical:Checkup                  1500.00 CNY
+  Assets:Cash:Checking                    -1500.00 CNY
