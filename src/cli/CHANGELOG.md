@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.2] - 2026-07-11
+
+### Added
+- `cashflow simulate` 命令：假设场景推演（报表层算术，不虚构账户）
+  - `-a, --adjust` 调整项：`ACCOUNT@AMOUNT`，支持百分比（`-20%`）和绝对值（`1000`）
+  - `-o, --one-time` 一次性事件：`DATE@AMOUNT`，金额即现金影响
+  - 输出基线/推演/变化三列对比表，支持 table/json 格式
+
+### Changed
+- `simulate` 从交易层重构为报表层，去掉虚拟账户和手动调平
+- 参数简化：去掉未使用的 `pattern` 字段和 `account` 字段
+
 ## [0.0.1] - 2026-07-11
 
 ### Changed
