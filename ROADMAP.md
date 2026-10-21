@@ -6,6 +6,6 @@
 
 | 模块 | 当前版本 | 状态 | 详情 |
 |------|----------|------|------|
-| [cli](src/cli/ROADMAP.md) | v0.0.1-alpha.1 | 已发布 | [详情](src/cli/ROADMAP.md) |
-| [provider](src/provider/ROADMAP.md) | - | 计划中 | [详情](src/provider/ROADMAP.md) |
-| [studio](src/studio/ROADMAP.md) | - | 计划中 | [详情](src/studio/ROADMAP.md) |
+| [cli](src/cli/docs/dev-guide/roadmap.md) | v0.0.1-alpha.1 | 已发布 | [详情](src/cli/docs/dev-guide/roadmap.md) |
+| [provider](src/provider/docs/dev-guide/roadmap.md) | - | 计划中 | [详情](src/provider/docs/dev-guide/roadmap.md) |
+| [studio](src/studio/docs/dev-guide/roadmap.md) | - | 计划中 | [详情](src/studio/docs/dev-guide/roadmap.md) |
