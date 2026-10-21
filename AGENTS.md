@@ -5,7 +5,7 @@
 | 文档 | 用途 |
 |------|------|
 | [README.md](README.md) | 项目简介、运行方式 |
-| [ROADMAP.md](ROADMAP.md) | 版本规划、模块状态 |
+| [ROADMAP.md](docs/dev-guide/roadmap.md) | 版本规划、模块状态 |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | 开发指南、代码风格、发布流程 |
 
 ## 使用条件
